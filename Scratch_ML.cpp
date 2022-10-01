@@ -8,6 +8,18 @@
 
 using namespace std;
 
+void split(vector<int> survived, vector<int> sex){
+    // We know that the total data points are 1046. Do an 80/20 split based on this for train/test
+    //need to randomize the vectors we read in.
+    auto rng = default_random_engine{};
+    shuffle(survived, sex, rng);
+    //create new vectors for train and test.
+    vector<int>::const_iterator trainSur = survived.begin() + 800;
+    vector<int>::const_iterator testSur = survived.at(801) + survived.end();
+    vector<int>::const_iterator trainSex = sex.begin() + 800;
+    vector<int>::const_iterator testSex = sex.at(801) + sex.end();
+}
+
 int main(int argc, char** argv){
     
     ifstream inFS; //Input file stream
