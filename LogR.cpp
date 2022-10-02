@@ -11,17 +11,17 @@ using namespace std::chrono;
 using namespace std;
 
 double accuracy(int tp, int fn, int tn, int fp){
-    double result = (tp+tn)/(tp+tn+fp+fn);
+    double result = (double)(tp+tn)/(tp+tn+fp+fn);
     return result;
 }
 
 double sensitivity(int tp, int fn, int tn, int fp){
-    double result = tp/(tp+fn);
+    double result = ((double)tp/(tp+fn));
     return result;
 }
 
 double specificity(int tp, int fn, int tn, int fp){
-    double result = tn/(tn+fp);
+    double result = ((double)tn/(tn+fp));
     return result;
 }
 
@@ -104,29 +104,24 @@ int main(int argc, char** argv){
     
     ofstream myfile;
     myfile.open("results.txt");
-    
 
-    vector<double>error; // for storing the error values
-    vector<double>output;
-    double err;    // for calculating error on each stage
-    double b0 = 0; // intializing b0
-    double b1 = 0; // initializing b1
-    double alpha = 0.01; // initializing our learning rate
+    vector<double> error; // for storing the error values
+    vector<double> output;
+    double p, pred, err, x = 0, y = 0, alpha = 0.01;
 
     // STARTING CLOCK
     std::chrono::time_point<std::chrono::system_clock> start, end;
     start = std::chrono::system_clock::now();
 
-    /*Training Phase*/
-    for (int i = 0; i < 800; i ++) { //Since there are 800 values in our dataset and we want to run for 4 epochs so total for loop run 3200 times
-    int idx = i % 800;   //for accessing index after every epoch
-    double p = -(b0 + b1 * train_sex.at(idx)); //making the prediction
-    double pred  = 1/(1+ exp(p)); //calculating final prediction applying sigmoid
-    err = train_survived.at(idx)-pred;  //calculating the error
-    b0 = b0 - alpha * err*pred *(1-pred)* 1.0;   //updating b0
-    b1 = b1 + alpha * err * pred*(1-pred) *train_sex.at(idx);//updating b1
-    output.push_back(b1);
-    myfile<<"B0="<<b0<<" "<<"B1="<<b1<<" "<<" error="<<err<<endl;// printing values after every step
+    // TRAINING THE DATA
+    for (int i = 0; i < 800; i++) { 
+    p = -(x + y * train_sex.at(i)); // making the prediction
+    pred  = 1/(1+ exp(p)); // calculating final prediction applying sigmoid
+    err = train_survived.at(i)-pred;  // calculating the error
+    x = x - alpha * err * pred *(1-pred)* 1.0; // reevaluating x
+    y = y + alpha * err * pred*(1-pred) * train_sex.at(i); // reevaluating y
+    output.push_back(y);
+    myfile << "x = "<< x <<" "<<"y ="<< y <<" "<<" error="<< err <<endl;// printing values after every step
     error.push_back(err);
     }
 
@@ -137,49 +132,55 @@ int main(int argc, char** argv){
     std::cout << "Elapsed time during training: " << elapsed_seconds.count() << "s\n";
     
 
-    sort(error.begin(),error.end(),custom_sort);// sorting to get the minimum value
-    cout<<"Final Coefficients are: "<<"B0 = "<<b0<<" "<<"B1 = "<<b1<<" "<<"error = "<<error[0] << endl;
+    sort(error.begin(),error.end(),custom_sort); // sorting to get the minimum value
+    cou t<< "Final Coefficients are: " << "x = " << x << " " << "y = " << y << " " << "error = " << error[0] << endl;
 
-    /*Testing Phase*/
-    double test1; //enter test x1 and x2
-    cout<<"Enter a test x value: " << endl;
-    cin>>test1;
-    double pred=b0+b1*test1; //make prediction
-    cout<<"The value predicted by the model= "<<pred<<endl;
-    if(pred>0.5)
-    pred=1;
-    else
-    pred=0;
-    cout<<"The class predicted by the model= "<< pred << endl;
+    // TESTING PHASE
+    double v; // ENTER EXAMPLE VALUE
+    cout << "Enter a value: " << endl;
+    cin >> v;
+    double pred = x + y * v; // CALCULATES THE PREDICTION
 
-    int TP, FN, TN, FP;
+    cout << "The value predicted by the model= "<< pred <<endl;
+    
+    if(pred > 0.5){
+        pred = 1;
+    }
+    else{
+        pred=0;
+    }
 
-    cout << "output size: " << output.size() << endl;
+    cout  << "The class predicted by the model = " << pred << endl;
 
+    int TP, FN, TN, FP; // VARIABLES TO CALCULATE ACCURACY, SENSITIVITY, AND SPECIFICITY
+
+    TP++;
     for(int x = 0;x<output.size();x++){
-        if(output.at(x) > 0 && train_survived.at(x) > 0){
+        if(abs(output.at(x)) > 0.5 && train_survived.at(x) == 1){
             TP++;
         }
-        if(output.at(x) > 0 && train_survived.at(x) < 0){
+        if(abs(output.at(x)) > 0.5 && train_survived.at(x) == 0){
             FN++;
         }
-        if(output.at(x) < 0 && train_survived.at(x) < 0){
+        if(abs(output.at(x)) < 0.5 && train_survived.at(x) == 0){
             TN++;
         }
-        else
+        if(abs(output.at(x)) < 0.5 && train_survived.at(x) == 1)
             FP++;
     }
 
+    /*
     cout << "TP: " << TP << endl;
     cout << "FN: " << FN << endl;
     cout << "TN: " << TN << endl;
     cout << "FP: " << FP << endl;
+    */
 
     cout << "Accuracy: " << accuracy(TP, FN, TN, FP) << endl;
     cout << "Sensitivity: " << sensitivity(TP, FN, TN, FP) << endl;
     cout << "Specificity: " << specificity(TP, FN, TN, FP) << endl;
 
     cout << "Closing file Boston.csv." << endl;
-    inFS.close(); // Done with file, so close it
-    myfile.close(); // Done writing to file, so close it
+    inFS.close(); // CLOSING FILE 
+    myfile.close(); // CLOSING WRITING TO RESULTS FILE
 }
