@@ -27,8 +27,8 @@ Several factors that stop research from being reproduced well can be hardware, c
     4. Methods used and results of those methods
     5. Details on computing infrastrucure
 
-[Machine Learning Source 1](https://towardsdatascience.com/reproducible-machine-learning-cf1841606805)
+[ML Research Source 1](https://towardsdatascience.com/reproducible-machine-learning-cf1841606805)
 
-[Machine Learning Source 2](https://blog.ml.cmu.edu/2020/08/31/5-reproducibility/)
+[ML Research Source 2](https://blog.ml.cmu.edu/2020/08/31/5-reproducibility/)
 
 [Modifiers Source](https://www.analyticsvidhya.com/blog/2021/07/deep-understanding-of-discriminative-and-generative-models-in-machine-learning/#h2_5)
