@@ -116,13 +116,13 @@ int main(int argc, char** argv){
 
     // TRAINING THE DATA
     for (int i = 0; i < 800; i++) { 
-    p = -(x + y * train_sex.at(i)); // making the prediction
-    pred  = 1/(1+ exp(p)); // calculating final prediction applying sigmoid
-    err = train_survived.at(i)-pred;  // calculating the error
-    x = x - alpha * err * pred *(1-pred)* 1.0; // reevaluating x
-    y = y + alpha * err * pred*(1-pred) * train_sex.at(i); // reevaluating y
-    output.push_back(y);
-    myfile << "x = "<< x <<" "<<"y ="<< y <<" "<<" error="<< err <<endl;// printing values after every step
+    p = -(x + y * train_sex.at(i)); 
+    pred  = 1/(1+ exp(p)); // making the prediction
+    err = abs(train_survived.at(i)-pred);  // calculating the error
+    x = x - alpha * err * pred * (1-pred) * 1.0; // reevaluating x
+    y = y + alpha * err * pred * (1-pred) * train_sex.at(i); // reevaluating y
+    output.push_back(abs(y));
+    myfile << "Coefficients: " << "x = " << abs(x) << " " << "y = " << abs(y) << " " << " Error = " << err << " Probability:" << pred << endl; // printing values after every step
     error.push_back(err);
     }
 
@@ -134,21 +134,22 @@ int main(int argc, char** argv){
     
 
     sort(error.begin(),error.end(),abs_sort); // sorting to get the minimum value
-    cout<< "Final Coefficients are: " << "x = " << x << " " << "y = " << y << " " << "error = " << error[0] << endl;
+    cout<< "Final Coefficients are: " << "x = " << abs(x) << " " << "y = " << abs(y) << " " << "error = " << error[0] << endl;
 
     // TESTING PHASE
     double v; // ENTER EXAMPLE VALUE
     cout << "Enter a value: " << endl;
     cin >> v;
-    double pred = x + y * v; // CALCULATES THE PREDICTION
+    pred = abs(x + y * v); // CALCULATES THE PREDICTION
 
     cout << "The value predicted by the model= "<< pred <<endl;
     
+    // WILL DETERMINE WHETHER OR NOT THEY SURVIVED BASED ON THE PERCENTAGE FOR SEX 
     if(pred > 0.5){
         pred = 1;
     }
     else{
-        pred=0;
+        pred = 0;
     }
 
     cout  << "The class predicted by the model = " << pred << endl;
