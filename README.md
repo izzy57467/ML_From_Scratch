@@ -1,4 +1,4 @@
-# ML_From_Scratch
+# ML From Scratch
 
 Jack Asaad - netID
 
