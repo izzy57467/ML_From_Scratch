@@ -25,11 +25,12 @@ double specificity(int tp, int fn, int tn, int fp){
     return result;
 }
 
-bool custom_sort(double a, double b)
+bool abs_sort(double x, double y)
 {
-    double  a1=abs(a-0);
-    double  b1=abs(b-0);
-    return a1<b1;
+    double  x1 = abs(x-0);
+    double  y1 = abs(y-0);
+    double result = x1 < y1;
+    return result;
 }
 
 int main(int argc, char** argv){
@@ -132,8 +133,8 @@ int main(int argc, char** argv){
     std::cout << "Elapsed time during training: " << elapsed_seconds.count() << "s\n";
     
 
-    sort(error.begin(),error.end(),custom_sort); // sorting to get the minimum value
-    cou t<< "Final Coefficients are: " << "x = " << x << " " << "y = " << y << " " << "error = " << error[0] << endl;
+    sort(error.begin(),error.end(),abs_sort); // sorting to get the minimum value
+    cout<< "Final Coefficients are: " << "x = " << x << " " << "y = " << y << " " << "error = " << error[0] << endl;
 
     // TESTING PHASE
     double v; // ENTER EXAMPLE VALUE
