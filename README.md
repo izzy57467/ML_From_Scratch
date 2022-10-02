@@ -9,6 +9,28 @@ We have created two programs that would model results from a Logistic Regression
 
 ## Logistic Regression Results
 
+Here are the results that were outputted to my terminal. It shows my x and y coefficients with a pretty low error and predicted the result of an inputted value.
+
+```
+Reading line 1
+
+heading: pclass,survived,sex,age
+Elapsed time during training: -1.66475e+09s
+Final Coefficients are: x = 0.96978 y = 0.596811 error = 0.275034
+
+Enter a value: 
+.00000025
+
+The value predicted by the model= 0.969779
+The class predicted by the model = 1
+
+Accuracy: 0.563981
+Sensitivity: 0.454545
+Specificity: 0.586305
+
+Closing file Boston.csv.
+```
+
 ## Naïve Bayes Results
 
 ## Generative Modifiers vs. Discriminative Modifiers
