@@ -155,20 +155,11 @@ int main(int argc, char** argv){
     likelihoodQuan(trainAge);
     likelihoodQuan(testAge);
         
+    float trainFinal = (qualLikelihood(survivalMatrixTrain, pclassMatrTrain) * qualLikelihood(survivalMatrixTrain, sexMatrTrain)
+    * likelihoodQuan(trainAge) * calcPrior(trainSur));
+    float testFinal = (qualLikelihood(survivalMatrixTest, pclassMatrTest) * qualLikelihood(survivalMatrixTest, sexMatrTest)
+    * likelihoodQuan(testAge) * calcPrior(testSur));
 
-    /*
-    cout << count(survived.begin(), survived.end(), 1) << endl;
-    cout << count(survived.begin(), survived.end(), 0) << endl;
-    
-    cout << "new length " << survived.size() << endl;
-
-    cout << "Closing file Boston.csv." << endl;
-    inFS.close(); //Done with file, so close it
-
-    cout << "Number of records: " << numObservations << endl;
-    */
-
-   //calculate probabilities
-   float perishTrain;
-   float surviveTrain;
+    cout << trainFinal << endl;
+    cout << testFinal << endl;
 }
