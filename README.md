@@ -1,6 +1,6 @@
 # ML From Scratch
 
-Jack Asaad - netID
+Jack Asaad - jfa180002
 
 Isabelle Villegas - iav180000
 
@@ -32,6 +32,9 @@ Closing file Boston.csv.
 ```
 
 ## Naïve Bayes Results
+Upon predicting on Naïve Bayes we see the following.
+Raw Survival Probability = 0.740821
+Raw Perish Probability = 0.259179
 
 ## Generative Modifiers vs. Discriminative Modifiers
 Discriminative Modifiers, which is associated with Logisitc Regression, will directly estimate the parameters of P(Y|X). Discriminative models are typically more efficient than generative models however. In regard to modifers though, the larger the data set becomes and the closer it gets to infinity the more similar the modifiers of both generative and discriminative become.
