@@ -9,7 +9,7 @@ We have created two programs that would model results from a Logistic Regression
 
 ## Logistic Regression Results
 
-Here are the results that were outputted to my terminal. It shows my x and y coefficients with a pretty low error and predicted the result of an inputted value.
+Here are the results that were outputted to my terminal. It shows my x and y coefficients with a pretty low error and predicted the result of an inputted value. My values for accuracy, sensitivty, and specificity were pretty low but still around the 50% threshold. 
 
 ```
 Reading line 1
@@ -33,7 +33,9 @@ Closing file Boston.csv.
 
 ## Naïve Bayes Results
 Upon predicting on Naïve Bayes we see the following.
+
 Raw Survival Probability = 0.740821
+
 Raw Perish Probability = 0.259179
 
 ## Generative Modifiers vs. Discriminative Modifiers
